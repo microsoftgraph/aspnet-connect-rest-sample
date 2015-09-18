@@ -1,0 +1,1 @@
+Connecting to Office 365 is the first step every app must take to start working with Office 365 services and data. This sample shows how to connect and use Office 365 unified API (preview) to send an email.
