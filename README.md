@@ -2,7 +2,7 @@
 
 Connecting to Office 365 is the first step every app must take to start working with Office 365 services and data. This sample shows how to connect and use Office 365 unified API (preview) to send an email. It uses [Active Directory Authentication Library](https://msdn.microsoft.com/en-us/library/azure/jj573266.aspx) to make OAuth2 call.
 
-> Note: To understand the code for calling the Office 365 unified API in an ASP.NET MVC app, see [Understanding Connect code sample] (https://github.com/OfficeDev/O365-AspNetMVC-Unified-API-Connect/wiki/Understanding-Connect-code-sample)
+> Note: To understand the code for calling the Office 365 unified API in an ASP.NET MVC app, see [Understanding Connect code sample] (https://github.com/OfficeDev/O365-AspNetMVC-Unified-API-Connect/wiki/Understanding-Connect-code-sample).
 
 ![Office 365 ASP.NET MVC sample screenshot](./README assets/O365AspNetMVCSendMailPageScreenshot.png)
 
