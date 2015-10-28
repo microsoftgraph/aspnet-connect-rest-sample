@@ -25,8 +25,8 @@ To use the Office 365 ASP.NET MVC Connect sample, you need the following:
 ## Configure and run the app
 1. Open **UnifiedApiConnect.sln** file. 
 2. In Solution Explorer, open the **Web.config** file. 
-3. Replace *{your_app_client_ID}* with the client ID of your registered Azure application.
-4. Replace *{your_app_client_secret}* with the key of your registered Azure application.
+3. Replace *ENTER_YOUR_CLIENT_ID* with the client ID of your registered Azure application.
+4. Replace *ENTER_YOUR_SECRET* with the key of your registered Azure application.
 3. Press F5 to build and debug. Run the solution and sign in to Office 365 with your organizational account.
 
      > Note: Copy and paste the start page URL address **http://localhost:55065/home/index**, to a different browser if you get the following error during sign in:**AADSTS70001: Application with identifier ad533dcf-ccad-469a-abed-acd1c8cc0d7d was not found in the directory**.
