@@ -11,7 +11,7 @@
 <form>
     <p>
     <p>
-        You're now connected to Office 365!  Click <b>Send Mail</b> to send a message from your Office 365 account using Office 365 unified API.  
+        You're now connected to Office 365!  Click <b>Send Mail</b> to send a message from your Office 365 account using unified API.  
     </p>
         <b>To:</b> @Html.EditorFor(m => userInfo.Address, new { htmlAttributes = new { style = "Width:350px" } })
     </p>
@@ -46,7 +46,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Office 365 Unified API Connect Sample", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Office 365 Connect Sample", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
 
