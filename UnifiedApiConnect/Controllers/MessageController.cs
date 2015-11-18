@@ -30,7 +30,7 @@ namespace UnifiedApiConnect.Controllers
             // After Index method renders the View, user clicks Send Mail, which comes in here.
             EnsureUser(ref userInfo);
 
-            // Send email using O365 unified API.
+            // Send email using the Microsoft Graph API.
             var sendMessageResult = await UnifiedApiHelper.SendMessageAsync(
                 (string)Session[SessionKeys.Login.AccessToken],  
                 GenerateEmail(userInfo));
