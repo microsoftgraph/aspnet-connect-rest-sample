@@ -8,6 +8,8 @@ Connecting to Office 365 is the first step every app must take to start working 
 
 ## Prerequisites
 
+Try out the [Get started with Office 365 APIs](http://dev.office.com/getting-started/office365apis?platform=option-dotnet#setup) page which simplifies registration so you can get this sample running faster.
+
 To use the Office 365 ASP.NET MVC Connect sample, you need the following:
 * Visual Studio 2015 installed and working on your development computer. 
 
