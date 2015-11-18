@@ -1,8 +1,8 @@
-# Office 365 Connect ASP.NET MVC sample using unified API (preview)
+# Office 365 Connect ASP.NET MVC sample using Microsoft Graph
 
-Connecting to Office 365 is the first step every app must take to start working with Office 365 services and data. This sample shows how to connect and use Office 365 unified API (preview) to send an email. It uses [Active Directory Authentication Library](https://msdn.microsoft.com/en-us/library/azure/jj573266.aspx) to make OAuth2 call.
+Connecting to Office 365 is the first step every app must take to start working with Office 365 services and data. This sample shows how to connect and use Microsoft Graph (previously called Office 365 unified API) to send an email. It uses [Active Directory Authentication Library](https://msdn.microsoft.com/en-us/library/azure/jj573266.aspx) to make OAuth2 call.
 
-> Note: To understand the code for calling the Office 365 unified API in an ASP.NET MVC app, see [Understanding Connect code sample] (https://github.com/OfficeDev/O365-AspNetMVC-Unified-API-Connect/wiki/Understanding-Connect-code-sample).
+> Note: To understand the code for calling the Microsoft Graph API in an ASP.NET MVC app, see [Understanding Connect code sample] (https://github.com/OfficeDev/O365-AspNetMVC-Microsoft-Graph-Connect/wiki/Understanding-Connect-code-sample).
 
 ![Office 365 ASP.NET MVC sample screenshot](./README assets/O365AspNetMVCSendMailPageScreenshot.png)
 
@@ -18,7 +18,7 @@ To use the Office 365 ASP.NET MVC Connect sample, you need the following:
 * A Microsoft Azure tenant to register your application. Azure Active Directory (AD) provides identity services that applications use for authentication and authorization. A trial subscription can be acquired here: [Microsoft Azure](https://account.windowsazure.com/SignUp).
 
      > Important: You also need to make sure your Azure subscription is bound to your Office 365 tenant. To do this, see the Active Directory team's blog post, [Creating and Managing Multiple Windows Azure Active Directories](http://blogs.technet.com/b/ad/archive/2013/11/08/creating-and-managing-multiple-windows-azure-active-directories.aspx). The section **Adding a new directory** will explain how to do this. You can also see [Set up your Office 365 development environment](https://msdn.microsoft.com/office/office365/howto/setup-development-environment#bk_CreateAzureSubscription) and the section **Associate your Office 365 account with Azure AD to create and manage apps** for more information.
-* A client ID and redirect URI values of an application registered in Azure. This sample application must be granted the **Send mail as signed-in user** permission for the **Office 365 unified API (preview)**. [Add a web application in Azure](https://msdn.microsoft.com/office/office365/HowTo/add-common-consent-manually#bk_RegisterWebApp) and [grant the proper permissions](https://github.com/OfficeDev/O365-AspNetMVC-Unified-API-Connect/wiki/Grant-permissions-to-the-Connect-application-in-Azure) to it.
+* A client ID and redirect URI values of an application registered in Azure. This sample application must be granted the **Send mail as signed-in user** permission for the **Microsoft Graph**. [Add a web application in Azure](https://msdn.microsoft.com/office/office365/HowTo/add-common-consent-manually#bk_RegisterWebApp) and [grant the proper permissions](https://github.com/OfficeDev/O365-AspNetMVC-Microsoft-Graph-Connect/wiki/Grant-permissions-to-the-Connect-application-in-Azure) to it.
 
      > Note: During the app registration process, make sure to specify **http://localhost:55065** as the **Sign-on URL**.  
 
@@ -33,16 +33,15 @@ To use the Office 365 ASP.NET MVC Connect sample, you need the following:
 
 ## Questions and comments
 
-We'd love to get your feedback about the Office 365 365 ASP.NET MVC Connect sample. You can send your questions and suggestions to us in the [Issues](https://github.com/OfficeDev/O365-AspNetMVC-Unified-API-Connect/issues) section of this repository.
+We'd love to get your feedback about the Office 365 365 ASP.NET MVC Connect sample. You can send your questions and suggestions to us in the [Issues](https://github.com/OfficeDev/O365-AspNetMVC-Microsoft-Graph-Connect/issues) section of this repository.
 
-Questions about Office 365 development in general should be posted to [Stack Overflow](http://stackoverflow.com/questions/tagged/Office365+API). Make sure that your questions or comments are tagged with [Office365] and [API].
+Questions about Office 365 development in general should be posted to [Stack Overflow](http://stackoverflow.com/questions/tagged/Office365+API). Make sure that your questions or comments are tagged with [Office365] and [MicrosoftGraph].
   
 ## Additional resources
 
-* [Office 365 APIs platform overview](https://msdn.microsoft.com/office/office365/howto/platform-development-overview)
-* [Getting started with Office 365 APIs](http://dev.office.com/getting-started/office365apis)
-* [Office 365 unified API overview (preview)](https://msdn.microsoft.com/office/office365/HowTo/office-365-unified-api-overview)
-* [Office 365 APIs starter projects and code samples](https://msdn.microsoft.com/office/office365/howto/starter-projects-and-code-samples)
+* [Microsoft Graph documentation](http://graph.microsoft.io)
+* [Microsoft Graph API References](http://graph.microsoft.io/docs/api-reference/v1.0)
+
 
 ## Copyright
 Copyright (c) 2015 Microsoft. All rights reserved.
