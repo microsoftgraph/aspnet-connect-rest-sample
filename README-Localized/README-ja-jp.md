@@ -4,7 +4,7 @@
 
 > 注:ASP.NET MVC アプリ で Microsoft Graph API を呼び出すためのコードを理解するには、「ASP.NET MVC アプリで Microsoft Graph を呼び出す (https://graph.microsoft.io/ja-jp/docs/platform/aspnetmvc)」をご覧ください。
 
-[Office 365 ASP.NET MVC サンプルのスクリーンショット](../README assets/O365AspNetMVCSendMailPageScreenshot.png)
+![Office 365 ASP.NET MVC サンプルのスクリーンショット](../README assets/O365AspNetMVCSendMailPageScreenshot.png)
 
 ## 前提条件
 
