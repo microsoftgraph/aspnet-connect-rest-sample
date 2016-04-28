@@ -4,7 +4,7 @@ Für die Arbeit mit Office 365-Diensten und -Daten muss jede App zunächst eine 
 
 > Hinweis: Weitere Informationen zum Code, der die Microsoft Graph-API in einer ASP.NET MVC-App aufruft, finden Sie unter [Aufrufen von Microsoft Graph in einer ASP.NET MVC-App] (https://graph.microsoft.io/en-us/docs/platform/aspnetmvc).
 
-[Screenshot des Office 365 ASP.NET MVC-Beispiels](../README assets/O365AspNetMVCSendMailPageScreenshot.png)
+![Screenshot des Office 365 ASP.NET MVC-Beispiels](../README assets/O365AspNetMVCSendMailPageScreenshot.png)
 
 ## Voraussetzungen
 
