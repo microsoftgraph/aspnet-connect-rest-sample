@@ -4,7 +4,7 @@ Conectarse a Office 365 es el primer paso que debe realizar cada aplicación par
 
 > Nota: Para entender el código para llamar a la API de Microsoft Graph en una aplicación ASP.NET MVC, consulte [Llamar a Microsoft Graph en una aplicación ASP.NET MVC] (https://graph.microsoft.io/en-us/docs/platform/aspnetmvc).
 
-[Captura de pantalla de ejemplo de ASP.NET MVC de Office 365](../README assets/O365AspNetMVCSendMailPageScreenshot.png)
+![Captura de pantalla de ejemplo de ASP.NET MVC de Office 365](../README assets/O365AspNetMVCSendMailPageScreenshot.png)
 
 ## Requisitos previos
 
