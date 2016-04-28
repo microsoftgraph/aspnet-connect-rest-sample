@@ -4,7 +4,7 @@ A primeira etapa para que os aplicativos comecem a funcionar com dados e serviç
 
 > Observação: Para compreender o código para chamar a API do Microsoft Graph em um aplicativo ASP.NET MVC, confira [Chamar o Microsoft Graph em um aplicativo ASP.NET MVC] (https://graph.microsoft.io/en-us/docs/platform/aspnetmvc).
 
-[Captura de tela do exemplo do Office 365 para ASP.NET MVC](../README assets/O365AspNetMVCSendMailPageScreenshot.png)
+![Captura de tela do exemplo do Office 365 para ASP.NET MVC](../README assets/O365AspNetMVCSendMailPageScreenshot.png)
 
 ## Pré-requisitos
 
