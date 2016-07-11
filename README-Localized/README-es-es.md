@@ -14,7 +14,7 @@ Para usar el ejemplo Connect de ASP.NET MVC para Office 365, necesita lo siguien
 * Visual Studio 2015 instalado y en funcionamiento en el equipo de desarrollo. 
 
      > Nota: Este ejemplo se escribió usando Visual Studio 2015. Si está usando Visual Studio 2013, asegúrese de cambiar la versión de idioma del compilador a 5 en el archivo de Web.config: **compilerOptions="/langversion:5**
-* Una cuenta de Office 365. Puede registrarse para obtener &lt;a herf="https://portal.office.com/Signup/Signup.aspx?OfferId=6881A1CB-F4EB-4db3-9F18-388898DAF510&amp;DL=DEVELOPERPACK&amp;ali=1#0"&gt;una suscripción a Office 365 Developer&lt;/a&gt;, que incluye los recursos que necesita para empezar a compilar aplicaciones de Office 365.
+* Una cuenta de Office 365. Puede registrarse para obtener &lt;a herf="https://profile.microsoft.com/RegSysProfileCenter/wizardnp.aspx?wizid=14b845d0-938c-45af-b061-f798fbb4d170"&gt;una suscripción a Office 365 Developer&lt;/a&gt;, que incluye los recursos que necesita para empezar a compilar aplicaciones de Office 365.
 
      > Nota: Si ya dispone de una suscripción, el vínculo anterior le dirige a una página con el mensaje *No se puede agregar a su cuenta actual*. En ese caso, use una cuenta de su suscripción actual de Office 365.
 * Un inquilino de Microsoft Azure para registrar la aplicación. Azure Active Directory (AD) proporciona servicios de identidad que las aplicaciones usan para autenticación y autorización. Puede adquirir una suscripción de prueba aquí: [Microsoft Azure](https://account.windowsazure.com/SignUp).
