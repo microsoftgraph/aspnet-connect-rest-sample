@@ -14,7 +14,7 @@ Zum Verwenden des Office 365 ASP.NET MVC Connect-Beispiels benötigen Sie Folgen
 * Visual Studio 2015, installiert und betriebsbereit auf dem Entwicklungscomputer. 
 
      > Hinweis: In diesem Beispiel wird Visual Studio 2015 verwendet. Wenn Sie Visual Studio 2013 verwenden, müssen Sie die Sprachversion des Compilers in der Web.config-Datei in „5“ ändern: **compilerOptions="/langversion:5**
-* Ein Office 365-Konto. Sie können sich für ein &lt;a herf="https://profile.microsoft.com/RegSysProfileCenter/wizardnp.aspx?wizid=14b845d0-938c-45af-b061-f798fbb4d170"&gt;Office 365-Entwicklerabonnement&lt;/a&gt; registrieren, das alle Ressourcen umfasst, die Sie zum Einstieg in die Entwicklung von Office 365-Apps benötigen.
+* Ein Office 365-Konto. Sie können sich für ein [Office 365-Entwicklerabonnement](https://aka.ms/devprogramsignup) registrieren, das alle Ressourcen umfasst, die Sie zum Einstieg in die Entwicklung von Office 365-Apps benötigen.
 
      > Hinweis: Wenn Sie bereits über ein Abonnement verfügen, gelangen Sie über den vorherigen Link zu einer Seite mit der Meldung „Leider können Sie Ihrem aktuellen Konto diesen Inhalt nicht hinzufügen“. Verwenden Sie in diesem Fall ein Konto aus Ihrem aktuellen Office 365-Abonnement.
 * Ein Microsoft Azure-Mandant zum Registrieren Ihrer Anwendung. Von Azure Active Directory (AD) werden Identitätsdienste bereitgestellt, die durch Anwendungen für die Authentifizierung und Autorisierung verwendet werden. Hier kann ein Testabonnement erworben werden: [Microsoft Azure](https://account.windowsazure.com/SignUp)
