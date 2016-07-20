@@ -14,7 +14,7 @@ Office 365 ASP.NET MVC Connect サンプルを使うには、次の事項が必�
 * 開発用コンピューターに Visual Studio 2015 がインストールされており、動作していること。 
 
      > 注:このサンプルは、Visual Studio 2015 を使用して書かれています。Visual Studio 2013 を使用している場合は、Web.config ファイルでコンパイラの言語バージョンを 5 に変更することを確認してください: **compilerOptions="/langversion:5**
-* Office 365 アカウント。&lt;a herf="https://profile.microsoft.com/RegSysProfileCenter/wizardnp.aspx?wizid=14b845d0-938c-45af-b061-f798fbb4d170"&gt;Office 365 Developer&lt;/a&gt; サブスクリプションにサイン アップすることができます。ここには、Office 365 アプリのビルドを開始するために必要なリソースが含まれています。
+* Office 365 アカウント。[Office 365 Developer](https://aka.ms/devprogramsignup) サブスクリプションにサイン アップすることができます。ここには、Office 365 アプリのビルドを開始するために必要なリソースが含まれています。
 
      > 注: サブスクリプションが既に存在する場合、上記のリンクをクリックすると、*申し訳ありません、現在のアカウントに追加できません* と表示されたページに移動します。その場合は、現在使用している Office 365 サブスクリプションのアカウントをご利用いただけます。
 * アプリケーションを登録する Microsoft Azure テナント。Azure Active Directory (AD) は、アプリケーションが認証と承認に使用する ID サービスを提供します。試用版サブスクリプションは、[Microsoft Azure](https://account.windowsazure.com/SignUp) で取得できます。
