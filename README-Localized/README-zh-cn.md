@@ -14,7 +14,7 @@
 * 在您的开发计算机上安装并使用 Visual Studio 2015。 
 
      > 注意：此示例是使用 Visual Studio 2015 编写的。如果您使用的是 Visual Studio 2013，请务必将 Web.config 文件中的编译器语言版本更改为 5：**compilerOptions="/langversion:5**
-* Office 365 帐户。您可以注册 &lt;a herf="https://profile.microsoft.com/RegSysProfileCenter/wizardnp.aspx?wizid=14b845d0-938c-45af-b061-f798fbb4d170"&gt;Office 365 开发人员订阅&lt;/a&gt;，其中包含开始构建 Office 365 应用所需的资源。
+* Office 365 帐户。您可以注册 [Office 365 开发人员订阅](https://aka.ms/devprogramsignup)，其中包含开始构建 Office 365 应用所需的资源。
 
      > 注意：如果您已经订阅，之前的链接会将您转至包含以下信息的页面：*抱歉，您无法将其添加到当前帐户*。在这种情况下，请使用当前 Office 365 订阅中的帐户。
 * 用于注册您的应用程序的 Microsoft Azure 租户。Azure Active Directory (AD) 为应用程序提供了用于进行身份验证和授权的标识服务。您还可在此处获得试用订阅：[Microsoft Azure](https://account.windowsazure.com/SignUp)。
