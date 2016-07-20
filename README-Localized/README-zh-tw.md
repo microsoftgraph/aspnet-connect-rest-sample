@@ -14,7 +14,7 @@
 * 已安裝的 Visual Studio 2015，且在您的開發電腦上運作。 
 
      > 附註：此範例乃使用 Visual Studio  2015 所撰寫而成。如果您目前使用的是 Visual Studio 2013，請確保將 Web.config 檔案中的編譯器語言版本變更為 5︰**compilerOptions="/langversion:5**
-* Office 365 帳戶。您可以註冊&lt;a herf="https://profile.microsoft.com/RegSysProfileCenter/wizardnp.aspx?wizid=14b845d0-938c-45af-b061-f798fbb4d170"&gt;Office 365 開發人員訂閱&lt;/a&gt;，其中包含在開始建置 Office 365 應用程式時，您所需的資源。
+* Office 365 帳戶。您可以註冊 [Office 365 開發人員訂閱](https://aka.ms/devprogramsignup)，其中包含在開始建置 Office 365 應用程式時，您所需的資源。
 
      > 附註：如果您已有訂用帳戶，則先前的連結會讓您連到顯示 *抱歉，您無法將之新增到您目前的帳戶* 訊息的頁面。在此情況下，請使用您目前的 Office 365 訂用帳戶所提供的帳戶。
 * 用來註冊您的應用程式的 Microsoft Azure 租用戶。Azure Active Directory (AD) 會提供識別服務，以便應用程式用於驗證和授權。在這裡可以取得試用版的訂用帳戶：[Microsoft Azure](https://account.windowsazure.com/SignUp)。
