@@ -23,7 +23,7 @@ To use the Office 365 ASP.NET MVC Connect sample, you need the following:
 2. On the top bar, click on your account and under the **Directory** list, choose the Active Directory tenant where you wish to register your application.
 3. Click on **More Services** in the left hand nav, and choose **Azure Active Directory**.
 4. Click on **App registrations** and choose **Add**.
-5. Enter a friendly name for the application, for example 'MSGraphConnectPython' and select 'Web app/API' as the **Application Type**. For the Sign-on URL, enter *http://localhost:55065*. Click on **Create** to create the application.
+5. Enter a friendly name for the application, for example 'MSGraphConnectAspNet' and select 'Web app/API' as the **Application Type**. For the Sign-on URL, enter *http://localhost:55065*. Click on **Create** to create the application.
 6. While still in the Azure portal, choose your application, click on **Settings** and choose **Properties**.
 7. Find the Application ID value and copy it to the clipboard.
 8. Configure Permissions for your application:
