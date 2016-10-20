@@ -24,7 +24,7 @@ In addition, the sample uses the [Microsoft Authentication Library (MSAL)](https
 This sample requires the following:  
 
   * [Visual Studio 2015](https://www.visualstudio.com/en-us/downloads) 
-  * Either a [Microsoft account](https://www.outlook.com) or [Office 365 for business account](https://msdn.microsoft.com/en-us/office/office365/howto/setup-development-environment#bk_Office365Account)
+  * Either a [Microsoft account](https://www.outlook.com) or [work or school account](http://dev.office.com/devprogram)
 
 ## Register the application
 
@@ -80,11 +80,11 @@ This sample requires the following:
 
 - [SampleAuthProvider.cs](/Microsoft%20Graph%20REST%20ASPNET%20Connect/Microsoft%20Graph%20REST%20ASPNET%20Connect/Helpers/SampleAuthProvider.cs). Implements the local IAuthProvider interface, and gets an access token by using the MSAL **AcquireTokenSilentAsync** method. You can replace this with your own authentication provider. 
 
-- [HomeController.cs](/Microsoft%20Graph%20REST%20ASPNET%20Connect/Microsoft%20Graph%20SDK%20ASPNET%20Connect/Controllers/HomeController.cs). Contains methods that use the **GraphServiceClient** to build and send calls to the Microsoft Graph service and to process the response.
+- [GraphService.cs](/Microsoft%20Graph%20REST%20ASPNET%20Connect/Microsoft%20Graph%20REST%20ASPNET%20Connect/Models/GraphService.cs). Contains methods (called by HomeController) that build and send REST calls to the Microsoft Graph API, and process the response.
    - The **GetMyEmailAddress** action gets the email address of the current user from the **mail** or **userPrincipalName** property.
    - The **SendMail** action sends an email on behalf of the current user.
 
-- [Graph.cshtml](/Microsoft%20Graph%20SDK%20ASPNET%20Connect/Microsoft%20Graph%20SDK%20ASPNET%20Connect/Views/Home/Graph.cshtml). Contains the sample's UI. 
+- [Graph.cshtml](/Microsoft%20Graph%20REST%20ASPNET%20Connect/Microsoft%20Graph%20REST%20ASPNET%20Connect/Views/Home/Graph.cshtml). Contains the sample's UI. 
 
 ## Questions and comments
 
