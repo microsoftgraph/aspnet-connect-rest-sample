@@ -1,51 +1,108 @@
-# 使用 Microsoft Graph 的 Office 365 Connect ASP.NET MVC 範例
+# Microsoft Graph Connect 範例 (適用於 ASP.NET 4.6)
 
-連接到 Office 365 是每個應用程式要開始使用 Office 365 服務和資料時必須採取的第一個步驟。此範例示範如何連接並使用 Microsoft Graph (之前稱為 Office 365 統一 API) 傳送電子郵件。它會使用 [Active Directory Authentication Library](https://msdn.microsoft.com/zh-tw/library/azure/jj573266.aspx) 進行 OAuth2 呼叫。
+## 目錄
 
-> 附註：若要了解在 ASP.NET MVC 應用程式中用於呼叫 Microsoft Graph API 的程式碼，請參閱 [在 ASP.NET MVC 應用程式中呼叫 Microsoft Graph] (https://graph.microsoft.io/en-us/docs/platform/aspnetmvc)。
+* [必要條件](#必要條件)
+* [註冊應用程式](#註冊應用程式)
+* [建置及執行範例](#建置及執行範例)
+* [附註的程式碼](#附註的程式碼)
+* [問題和建議](#問題和建議)
+* [參與](#參與)
+* [其他資源](#其他資源)
 
-![Office 365 ASP.NET MVC 範例螢幕擷取畫面](../README assets/O365AspNetMVCSendMailPageScreenshot.png)
+這個範例示範如何使用 Microsoft Graph API 將 ASP.NET 4.6 MVC Web 應用程式連線至 Microsoft 工作或學校 (Azure Active Directory) 或個人 (Microsoft) 帳戶，以傳送郵件。 它會使用 [Microsoft Graph.NET 用戶端程式庫](https://github.com/microsoftgraph/msgraph-sdk-dotnet)，使用 Microsoft Graph 所傳回的資料。 
+
+此外，範例會使用 [Microsoft 驗證程式庫 (MSAL)](https://www.nuget.org/packages/Microsoft.Identity.Client/) 進行驗證。 MSAL SDK 提供功能以使用 [v2 驗證端點](https://azure.microsoft.com/en-us/documentation/articles/active-directory-appmodel-v2-overview)，可讓開發人員撰寫單一程式碼流程，控制工作或學校 (Azure Active Directory) 和個人 (Microsoft) 帳戶的驗證。
+
+ > **附註** MSAL SDK 目前是發行前版本，因此不應該用於實際執行程式碼。 在這裡僅供說明目的使用。
 
 ## 必要條件
 
-嘗試可簡化註冊的 [Office 365 API 入門](http://dev.office.com/getting-started/office365apis?platform=option-dotnet#setup)頁面，以便您能更快速地執行這個範例。
+此範例需要下列項目：  
 
-若要使用 Office 365 ASP.NET MVC Connect 範例，您需要下列項目：
-* 已安裝的 Visual Studio 2015，且在您的開發電腦上運作。 
+  * [Visual Studio 2015](https://www.visualstudio.com/en-us/downloads) 
+  * [Microsoft 帳戶](https://www.outlook.com)或[商務用 Office 365 帳戶](https://msdn.microsoft.com/en-us/office/office365/howto/setup-development-environment#bk_Office365Account)。 您可以註冊 [Office 365 開發人員訂用帳戶](https://msdn.microsoft.com/en-us/office/office365/howto/setup-development-environment#bk_Office365Account)，其中包含開始建置 Office 365 應用程式所需的資源。
 
-     > 附註：此範例乃使用 Visual Studio  2015 所撰寫而成。如果您目前使用的是 Visual Studio 2013，請確保將 Web.config 檔案中的編譯器語言版本變更為 5︰**compilerOptions="/langversion:5**
-* Office 365 帳戶。您可以註冊 [Office 365 開發人員訂閱](https://aka.ms/devprogramsignup)，其中包含在開始建置 Office 365 應用程式時，您所需的資源。
+## 註冊應用程式
 
-     > 附註：如果您已有訂用帳戶，則先前的連結會讓您連到顯示 *抱歉，您無法將之新增到您目前的帳戶* 訊息的頁面。在此情況下，請使用您目前的 Office 365 訂用帳戶所提供的帳戶。
-* 用來註冊您的應用程式的 Microsoft Azure 租用戶。Azure Active Directory (AD) 會提供識別服務，以便應用程式用於驗證和授權。在這裡可以取得試用版的訂用帳戶：[Microsoft Azure](https://account.windowsazure.com/SignUp)。
+1. 使用您的個人或工作或學校帳戶登入[應用程式註冊入口網站](https://apps.dev.microsoft.com/)。
 
-     > 重要事項：您還需要確定您的 Azure 訂用帳戶已繫結至您的 Office 365 租用戶。若要執行這項操作，請參閱 Active Directory 小組的部落格文章：[建立和管理多個 Windows Azure Active Directory](http://blogs.technet.com/b/ad/archive/2013/11/08/creating-and-managing-multiple-windows-azure-active-directories.aspx)。**新增目錄**一節將說明如何執行這項操作。如需詳細資訊，也可以參閱[設定 Office 365 開發環境](https://msdn.microsoft.com/office/office365/howto/setup-development-environment#bk_CreateAzureSubscription)和**建立 Office 365 帳戶與 Azure AD 的關聯以便建立和管理應用程式**一節。
-* 在 Azure 中註冊之應用程式的用戶端識別碼和重新導向 URI 值。此範例應用程式必須取得 **Microsoft Graph** 的 [以登入的使用者身分傳送郵件]<e /> 權限。[在 Azure 中新增 Web 應用程式](https://msdn.microsoft.com/office/office365/HowTo/add-common-consent-manually#bk_RegisterWebApp)和[授與適當的權限](https://github.com/OfficeDev/O365-AspNetMVC-Microsoft-Graph-Connect/wiki/Grant-permissions-to-the-Connect-application-in-Azure)給它。
+2. 選擇 [新增應用程式]。
 
-     > 附註：在應用程式註冊過程中，請務必指定 **http://localhost:55065** 做為 [登入 URL]<e />。  
+3. 為應用程式輸入名稱，然後選擇 [建立應用程式]。 
+    
+   [註冊] 頁面隨即顯示，列出您的應用程式的屬性。
 
-## 設定和執行應用程式
-1. 開啟 **UnifiedApiConnect.sln** 檔案。 
-2. 在 [方案總管] 中，開啟 **Web.config** 檔案。 
-3. 用已註冊之 Azure 應用程式的用戶端識別碼來取代 *ENTER_YOUR_CLIENT_ID*。
-4. 用已註冊之 Azure 應用程式的金鑰來取代 *ENTER_YOUR_SECRET*。
-3. 按 F5 進行建置和偵錯。執行解決方案並使用您組織的帳戶登入 Office 365。
+4. 複製應用程式 ID。 這是您的應用程式的唯一識別碼。 
 
-     > 附註：如果您在登入期間收到下列錯誤，請複製起始頁面 URL 位址 **http://localhost:55065/home/index**，並貼到不同的瀏覽器：**AADSTS70001:在目錄中找不到識別碼為 ad533dcf-ccad-469a-abed-acd1c8cc0d7d 的應用程式**。
+5. 在 [應用程式密碼] 底下，選擇 [產生新密碼] 從 [產生的新密碼] 對話方塊中複製密碼。
 
-## 問題與意見
+   使用應用程式 ID 和密碼，在下一個區段中設定範例應用程式。 
 
-我們很樂於收到您對於 Office 365 365 ASP.NET MVC Connect 範例的意見反應。您可以在此儲存機制的[問題](https://github.com/OfficeDev/O365-AspNetMVC-Microsoft-Graph-Connect/issues)區段中，將您的問題及建議傳送給我們。
+6. 在 [平台] 底下，選擇 [新增平台]。
 
-請在 [Stack Overflow](http://stackoverflow.com/questions/tagged/Office365+API) 提出有關 Office 365 開發的一般問題。務必以 [Office365] 和 [MicrosoftGraph] 標記您的問題或意見。
-  
+7. 選擇 [Web]。
+
+8. 請確定已選取 [允許隱含的流程] 核取方塊，然後輸入 *https://localhost:44300/* 做為重新導向 URI。 
+
+   [允許隱含的流程] 選項會啟用混合式流程。 在驗證期間，這可讓應用程式收到登入資訊 (id_token) 和成品 (在這種情況下，是授權程式碼)，應用程式可以用來取得存取權杖。
+
+9. 選擇 [儲存]。
+
+## 建置及執行範例
+
+1. 下載或複製 Microsoft Graph Connect 範例 (適用於 ASP.NET 4.6)。
+
+2. 在 Visual Studio 中開啟範例解決方案。
+
+3. 在根目錄的 Web.config 檔案中，將 **ida:AppId** 和 **ida:AppSecret** 預留位置值取代為您在應用程式註冊期間複製的應用程式 ID 與密碼。
+
+4. 按 F5 以建置及執行範例。 這樣會還原 NuGet 封裝相依性，並開啟應用程式。
+
+   >如果您在安裝封裝時看到任何錯誤，請確定您放置解決方案的本機路徑不會太長/太深。 將解決方案移靠近您的磁碟機根目錄可解決這個問題。
+
+5. 登入您的個人或工作或學校帳戶，並授與要求的權限。
+
+6. 選擇 [取得電子郵件地址] 按鈕。 當作業完成時，登入使用者的電子郵件地址會顯示在頁面中。
+
+7. 選擇性編輯收件者清單和電子郵件主旨，然後選擇 [傳送郵件] 按鈕。 當郵件傳送時，成功的訊息會顯示在按鈕下方。
+
+## 附註的程式碼
+
+- [Startup.Auth.cs](/Microsoft%20Graph%20SDK%20ASPNET%20Connect/Microsoft%20Graph%20SDK%20ASPNET%20Connect/App_Start/Startup.Auth.cs). 驗證目前使用者，並初始化範例的權杖快取。
+
+- [SessionTokenCache.cs](/Microsoft%20Graph%20SDK%20ASPNET%20Connect/Microsoft%20Graph%20SDK%20ASPNET%20Connect/TokenStorage/SessionTokenCache.cs). 儲存使用者的權杖資訊。 您可以將這個項目取代為您自己的自訂權杖快取。 在[多租用戶應用程式中的快取存取權杖](https://azure.microsoft.com/en-us/documentation/articles/guidance-multitenant-identity-token-cache/)中深入了解。
+
+- [SampleAuthProvider.cs](/Microsoft%20Graph%20SDK%20ASPNET%20Connect/Microsoft%20Graph%20SDK%20ASPNET%20Connect/Helpers/SampleAuthProvider.cs). 實作本機 IAuthProvider 介面，並取得存取權杖，方法是使用 MSAL **AcquireTokenSilentAsync** 方法。 您可以將這個項目取代為您自己的驗證提供者。 
+
+- [SDKHelper.cs](/Microsoft%20Graph%20SDK%20ASPNET%20Connect/Microsoft%20Graph%20SDK%20ASPNET%20Connect/Helpers/SDKHelper.cs). 從 [Microsoft Graph.NET 用戶端程式庫](https://github.com/microsoftgraph/msgraph-sdk-dotnet)初始化 **GraphServiceClient**用來與 Microsoft Graph 互動。
+
+- [HomeController.cs](/Microsoft%20Graph%20SDK%20ASPNET%20Connect/Microsoft%20Graph%20SDK%20ASPNET%20Connect/Controllers/HomeController.cs). 包含方法，該方法使用 **GraphServiceClient** 以建置並傳送呼叫至 Microsoft Graph 服務，並且處理回應。
+   - **GetMyEmailAddress** 動作會從 **mail** 或 **userPrincipalName** 屬性，取得目前使用者的電子郵件地址。
+   - **SendMail** 動作會代表目前的使用者傳送電子郵件。
+
+- [Graph.cshtml](/Microsoft%20Graph%20SDK%20ASPNET%20Connect/Microsoft%20Graph%20SDK%20ASPNET%20Connect/Views/Home/Graph.cshtml). 包含範例的 UI。 
+
+## 問題和建議
+
+我們很樂於收到您對於此範例的意見反應。 您可以在此儲存機制的[問題](https://github.com/microsoftgraph/aspnet-connect-sample/issues)區段中，將您的問題及建議傳送給我們。
+
+我們很重視您的意見。 請透過 [Stack Overflow](http://stackoverflow.com/questions/tagged/microsoftgraph) 與我們連絡。 以 [MicrosoftGraph] 標記您的問題。
+
+## 參與 ##
+
+如果您想要參與這個範例，請參閱 [CONTRIBUTING.md](CONTRIBUTING.md)。
+
+此專案已採用 [Microsoft 開放原始碼執行](https://opensource.microsoft.com/codeofconduct/)。如需詳細資訊，請參閱[程式碼執行常見問題集](https://opensource.microsoft.com/codeofconduct/faq/)，如果有其他問題或意見，請連絡 [opencode@microsoft.com](mailto:opencode@microsoft.com)。
+
 ## 其他資源
 
-* [Microsoft Graph 文件](http://graph.microsoft.io)
-* [Microsoft Graph API 參考](http://graph.microsoft.io/docs/api-reference/v1.0)
-
+- [其他 Microsoft Graph connect 範例](https://github.com/MicrosoftGraph?utf8=%E2%9C%93&query=-Connect)
+- [Microsoft Graph 概觀](http://graph.microsoft.io)
+- [Office 開發人員程式碼範例](http://dev.office.com/code-samples)
+- [Office 開發中心](http://dev.office.com/)
 
 ## 著作權
-Copyright (c) 2015 Microsoft.著作權所有，並保留一切權利。
+Copyright (c) 2016 Microsoft.著作權所有，並保留一切權利。
 
 

@@ -1,62 +1,112 @@
-# Office 365 Connect ASP.NET MVC sample using Microsoft Graph
+# Microsoft Graph Connect Sample for ASP.NET 4.6 (REST)
 
-Connecting to Office 365 is the first step every app must take to start working with Office 365 services and data. This sample shows how to connect and use Microsoft Graph (previously called Office 365 unified API) to send an email. It uses [Active Directory Authentication Library](https://msdn.microsoft.com/en-us/library/azure/jj573266.aspx) to make OAuth2 call.
+## Table of contents
 
-![Office 365 ASP.NET MVC sample screenshot](./README assets/O365AspNetMVCSendMailPageScreenshot.png)
+* [Introduction](#introduction)
+* [Prerequisites](#prerequisites)
+* [Register the application](#register-the-application)
+* [Build and run the sample](#build-and-run-the-sample)
+* [Code of note](#code-of-note)
+* [Questions and comments](#questions-and-comments)
+* [Contributing](#contributing)
+* [Additional resources](#additional-resources)
+
+## Introduction
+
+This sample shows how to connect an ASP.NET 4.6 MVC web app to a Microsoft work or school (Azure Active Directory) or personal (Microsoft) account using the Microsoft Graph API to send an email. It uses REST calls to interact with the Microsoft Graph API.
+
+In addition, the sample uses the [Microsoft Authentication Library (MSAL)](https://www.nuget.org/packages/Microsoft.Identity.Client/) for authentication. The MSAL SDK provides features for working with the [v2 authentication endpoint](https://azure.microsoft.com/en-us/documentation/articles/active-directory-appmodel-v2-overview), which enables developers to write a single code flow that handles authentication for both work or school and personal accounts.
+
+ > **Note** The MSAL SDK is currently in prerelease, and as such should not be used in production code. It is used here for illustrative purposes only.
 
 ## Prerequisites
 
-To use the Office 365 ASP.NET MVC Connect sample, you need the following:
-* Visual Studio 2015 installed and working on your development computer. 
+This sample requires the following:  
 
-     > Note: This sample is written using Visual Studio 2015. If you're using Visual Studio 2013, make sure to change the compiler language version to 5 in the Web.config file:  **compilerOptions="/langversion:5**
-* An Office 365 account. You can sign up for [an Office 365 Developer subscription](https://aka.ms/devprogramsignup) that includes the resources that you need to start building Office 365 apps.
+  * [Visual Studio 2015](https://www.visualstudio.com/en-us/downloads) 
+  * Either a [Microsoft account](https://www.outlook.com) or [work or school account](http://dev.office.com/devprogram)
 
-     > Note: If you already have a subscription, the previous link sends you to a page with the message *Sorry, you can’t add that to your current account*. In that case use an account from your current Office 365 subscription.
+## Register the application
 
-## Register the app
+1. Sign into the [App Registration Portal](https://apps.dev.microsoft.com/) using either your personal or work or school account.
 
-1. Sign in to the [Azure portal](https://portal.azure.com/).
-2. On the top bar, click on your account and under the **Directory** list, choose the Active Directory tenant where you wish to register your application.
-3. Click on **More Services** in the left hand nav, and choose **Azure Active Directory**.
-4. Click on **App registrations** and choose **Add**.
-5. Enter a friendly name for the application, for example 'MSGraphConnectAspNet' and select 'Web app/API' as the **Application Type**. For the Sign-on URL, enter *http://localhost:55065*. Click on **Create** to create the application.
-6. While still in the Azure portal, choose your application, click on **Settings** and choose **Properties**.
-7. Find the Application ID value and copy it to the clipboard.
-8. Configure Permissions for your application:
-9. In the **Settings** menu, choose the **Required permissions** section, click on **Add**, then **Select an API**, and select **Microsoft Graph**.
-10. Then, click on Select Permissions and select **Sign in and read user profile** and **Send mail as a user**. Click **Select** and then **Done**.
-11. In the **Settings** menu, choose the **Keys** section. Enter a description and select a duration for the key. Click **Save**.
-12. **Important**: Copy the key value. You won't be able to access this value again once you leave this pane. You will use this value as your app secret.
+2. Choose **Add an app**.
 
+3. Enter a name for the app, and choose **Create application**. 
+	
+   The registration page displays, listing the properties of your app.
 
-## Configure and run the app
-1. Open **UnifiedApiConnect.sln** file. 
-2. In Solution Explorer, open the **Web.config** file. 
-3. Replace *ENTER_YOUR_CLIENT_ID* with the app ID of your registered Azure application.
-4. Replace *ENTER_YOUR_SECRET* with the key of your registered Azure application.
-3. Press F5 to build and debug. Run the solution and sign in to Office 365 with your organizational account.
+4. Copy the Application Id. This is the unique identifier for your app. 
 
-     > Note: Copy and paste the start page URL address **http://localhost:55065/home/index**, to a different browser if you get the following error during sign in:**AADSTS70001: Application with identifier ad533dcf-ccad-469a-abed-acd1c8cc0d7d was not found in the directory**.
+5. Under **Application Secrets**, choose **Generate New Password**. Copy the password from the **New password generated** dialog.
 
-<a name="contributing"></a>
-## Contributing ##
+   You'll use the application ID and password (secret) to configure the sample app in the next section. 
 
-If you'd like to contribute to this sample, see [CONTRIBUTING.MD](/CONTRIBUTING.md).
+6. Under **Platforms**, choose **Add Platform**.
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+7. Choose **Web**.
+
+8. Make sure the **Allow Implicit Flow** check box is selected, and enter *http://localhost:55065/* as the Redirect URI. 
+
+   The **Allow Implicit Flow** option enables the hybrid flow. During authentication, this enables the app to receive both sign-in info (the id_token) and artifacts (in this case, an authorization code) that the app can use to obtain an access token.
+
+9. Choose **Save**.
+
+## Build and run the sample
+
+1. Download or clone the Microsoft Graph Connect Sample for ASP.NET 4.6.
+
+2. Open the sample solution in Visual Studio.
+
+3. In the Web.config file in the root directory, replace the **ida:AppId** and **ida:AppSecret** placeholder values with the application ID and password that you copied during app registration.
+
+4. Press F5 to build and run the sample. This will restore NuGet package dependencies and open the app.
+
+   >If you see any errors while installing packages, make sure the local path where you placed the solution is not too long/deep. Moving the solution closer to the root of your drive resolves this issue.
+
+5. Sign in with your personal or work or school account and grant the requested permissions.
+
+6. Choose the **Get email address** button. When the operation completes, the email address of the signed-in user is displayed on the page.
+
+7. Optionally edit the recipient list and email subject, and then choose the **Send email** button. When the mail is sent, a Success message is displayed below the button.
+
+8. Next steps: Check out the [Microsoft Graph Snippets Sample for ASP.NET 4.6](https://github.com/microsoftgraph/aspnet-snippets-sample) to see examples of common Microsoft Graph operations.
+
+## Code of note
+
+- [Startup.Auth.cs](/Microsoft%20Graph%20REST%20ASPNET%20Connect/Microsoft%20Graph%20REST%20ASPNET%20Connect/App_Start/Startup.Auth.cs). Authenticates the current user and initializes the sample's token cache.
+
+- [SessionTokenCache.cs](/Microsoft%20Graph%20REST%20ASPNET%20Connect/Microsoft%20Graph%20REST%20ASPNET%20Connect/TokenStorage/SessionTokenCache.cs). Stores the user's token information. You can replace this with your own custom token cache. Learn more in [Caching access tokens in a multitenant application](https://azure.microsoft.com/en-us/documentation/articles/guidance-multitenant-identity-token-cache/).
+
+- [SampleAuthProvider.cs](/Microsoft%20Graph%20REST%20ASPNET%20Connect/Microsoft%20Graph%20REST%20ASPNET%20Connect/Helpers/SampleAuthProvider.cs). Implements the local IAuthProvider interface, and gets an access token by using the MSAL **AcquireTokenSilentAsync** method. You can replace this with your own authentication provider. 
+
+- [GraphService.cs](/Microsoft%20Graph%20REST%20ASPNET%20Connect/Microsoft%20Graph%20REST%20ASPNET%20Connect/Models/GraphService.cs). Contains methods (called by HomeController) that build and send REST calls to the Microsoft Graph API, and process the response.
+   - The **GetMyEmailAddress** action gets the email address of the current user from the **mail** or **userPrincipalName** property.
+   - The **SendMail** action sends an email on behalf of the current user.
+
+- [Graph.cshtml](/Microsoft%20Graph%20REST%20ASPNET%20Connect/Microsoft%20Graph%20REST%20ASPNET%20Connect/Views/Home/Graph.cshtml). Contains the sample's UI. 
 
 ## Questions and comments
 
-We'd love to get your feedback about the Office 365 ASP.NET MVC Connect sample. You can send your questions and suggestions to us in the [Issues](https://github.com/OfficeDev/O365-AspNetMVC-Microsoft-Graph-Connect/issues) section of this repository.
+We'd love to get your feedback about this sample. You can send us your questions and suggestions in the [Issues](https://github.com/microsoftgraph/aspnet-connect-rest-sample/issues) section of this repository.
 
-Questions about Office 365 development in general should be posted to [Stack Overflow](http://stackoverflow.com/questions/tagged/Office365+API). Make sure that your questions or comments are tagged with [Office365] and [MicrosoftGraph].
-  
+Your feedback is important to us. Connect with us on [Stack Overflow](http://stackoverflow.com/questions/tagged/microsoftgraph). Tag your questions with [MicrosoftGraph].
+
+## Contributing ##
+
+If you'd like to contribute to this sample, see [CONTRIBUTING.md](CONTRIBUTING.md).
+
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+
 ## Additional resources
 
-* [Microsoft Graph documentation](http://graph.microsoft.io)
-* [Microsoft Graph API References](http://graph.microsoft.io/docs/api-reference/v1.0)
-
+- [Other Microsoft Graph Connect samples](https://github.com/MicrosoftGraph?utf8=%E2%9C%93&query=-Connect)
+- [Microsoft Graph overview](http://graph.microsoft.io)
+- [Office developer code samples](http://dev.office.com/code-samples)
+- [Office dev center](http://dev.office.com/)
 
 ## Copyright
-Copyright (c) 2015 Microsoft. All rights reserved.
+Copyright (c) 2016 Microsoft. All rights reserved.
+
+
+

@@ -163,7 +163,7 @@ Once your changes are successfully merged into the main repository, delete the b
 #### To delete a branch
 
 1.	In the Git Bash command prompt, type `git checkout master`. This ensures that you aren't in the branch to be deleted (which isn't allowed).
-2.	Next, at the command prompt, type `git branch -d <branch name>`. This deletes the branch on your computer only if it has been successfully merged to the upstream repository. (You can override this behavior with the `â€“D` flag, but first be sure you want to do this.)
+2.	Next, at the command prompt, type `git branch -d <branch name>`. This deletes the branch on your computer only if it has been successfully merged to the upstream repository. (You can override this behavior with the `–D` flag, but first be sure you want to do this.)
 3.	Finally, type `git push origin :<branch name>` at the command prompt (a space before the colon and no space after it).  This will delete the branch on your github fork.  
 
 Congratulations, you have successfully contributed to the project!
@@ -213,3 +213,4 @@ We typically review pull requests and respond to issues within 10 business days.
 [Set Up Git]: http://help.github.com/win-set-up-git/
 [Markdown Home]: http://daringfireball.net/projects/markdown/
 [Daring Fireball]: http://daringfireball.net/
+

@@ -1,51 +1,108 @@
-# Microsoft Graph を使った Office 365 Connect ASP.NET MVC サンプル
+# ASP.NET 4.6 用 Microsoft Graph Connect のサンプル
 
-各アプリで Office 365 のサービスとデータの操作を開始するため、最初に Office 365 に接続する必要があります。このサンプルでは、Microsoft Graph (以前は Office 365 統合 API と呼ばれていた) に接続して使って、電子メールを送信する方法を示します。[Azure Active Directory 認証ライブラリ](https://msdn.microsoft.com/ja-jp/library/azure/jj573266.aspx)を使って、OAuth2 呼び出しを行います。
+## 目次
 
-> 注:ASP.NET MVC アプリ で Microsoft Graph API を呼び出すためのコードを理解するには、「ASP.NET MVC アプリで Microsoft Graph を呼び出す (https://graph.microsoft.io/ja-jp/docs/platform/aspnetmvc)」をご覧ください。
+* [前提条件](#前提条件)
+* [アプリケーションの登録](#アプリケーションの登録)
+* [サンプルの構築と実行](#サンプルの構築と実行)
+* [ノートのコード](#ノートのコード)
+* [質問とコメント](#質問とコメント)
+* [投稿](#投稿)
+* [その他のリソース](#その他のリソース)
 
-![Office 365 ASP.NET MVC サンプルのスクリーンショット](../README assets/O365AspNetMVCSendMailPageScreenshot.png)
+このサンプルは、メールを送信するための Microsoft Graph API を使用して、Microsoft の職場または学校 (Azure Active Directory) アカウント、あるいは個人用 (Microsoft) アカウントに ASP.NET 4.6 MVC のWeb アプリを接続する方法を示します。 [Microsoft Graph .NET クライアント ライブラリ](https://github.com/microsoftgraph/msgraph-sdk-dotnet) を使用して、Microsoft Graph が返すデータを操作します。 
+
+また、サンプルでは認証に [Microsoft 認証ライブラリ (MSAL)](https://www.nuget.org/packages/Microsoft.Identity.Client/) を使用します。 MSAL SDK には、[v2 認証エンドポイント](https://azure.microsoft.com/en-us/documentation/articles/active-directory-appmodel-v2-overview)を操作するための機能が用意されており、開発者は職場または学校 (Azure Active Directory) アカウント、および個人用 (Microsoft) アカウントの両方に対する認証を処理する 1 つのコード フローを記述することができます。
+
+ > **注** 現在、MSAL SDK はプレリリース段階であるため、運用コードでは使用できません。 ここでは、例示目的のみに使用されています
 
 ## 前提条件
 
-このサンプルをより迅速に実行するため、「[Office 365 API を使う](http://dev.office.com/getting-started/office365apis?platform=option-dotnet#setup)」ページに記載された登録の簡略化をお試しください。
+このサンプルを実行するには次のものが必要です:  
 
-Office 365 ASP.NET MVC Connect サンプルを使うには、次の事項が必要です:
-* 開発用コンピューターに Visual Studio 2015 がインストールされており、動作していること。 
+  * [Visual Studio 2015](https://www.visualstudio.com/en-us/downloads) 
+  * [Microsoft アカウント](https://www.outlook.com)または [Office 365 for Business アカウント](https://msdn.microsoft.com/en-us/office/office365/howto/setup-development-environment#bk_Office365Account)。 Office 365 アプリのビルドを開始するために必要なリソースを含む、[Office 365 Developer サブスクリプション](https://msdn.microsoft.com/en-us/office/office365/howto/setup-development-environment#bk_Office365Account)にサインアップできます。
 
-     > 注:このサンプルは、Visual Studio 2015 を使用して書かれています。Visual Studio 2013 を使用している場合は、Web.config ファイルでコンパイラの言語バージョンを 5 に変更することを確認してください: **compilerOptions="/langversion:5**
-* Office 365 アカウント。[Office 365 Developer](https://aka.ms/devprogramsignup) サブスクリプションにサイン アップすることができます。ここには、Office 365 アプリのビルドを開始するために必要なリソースが含まれています。
+## アプリケーションの登録
 
-     > 注: サブスクリプションが既に存在する場合、上記のリンクをクリックすると、*申し訳ありません、現在のアカウントに追加できません* と表示されたページに移動します。その場合は、現在使用している Office 365 サブスクリプションのアカウントをご利用いただけます。
-* アプリケーションを登録する Microsoft Azure テナント。Azure Active Directory (AD) は、アプリケーションが認証と承認に使用する ID サービスを提供します。試用版サブスクリプションは、[Microsoft Azure](https://account.windowsazure.com/SignUp) で取得できます。
+1. 個人用アカウント、あるいは職場または学校アカウントのいずれかを使用して、[アプリ登録ポータル](https://apps.dev.microsoft.com/)にサインインします。
 
-     > 重要事項: Azure サブスクリプションが Office 365 テナントにバインドされていることを確認する必要があります。確認するには、Active Directory チームのブログ投稿「[複数の Windows Azure Active Directory を作成および管理する](http://blogs.technet.com/b/ad/archive/2013/11/08/creating-and-managing-multiple-windows-azure-active-directories.aspx)」を参照してください。「**新しいディレクトリを追加する**」セクションで、この方法について説明しています。また、詳細については、「[Office 365 開発環境をセットアップする](https://msdn.microsoft.com/office/office365/howto/setup-development-environment#bk_CreateAzureSubscription)」や「**Office 365 アカウントを Azure AD と関連付けてアプリを作成および管理する**」セクションも参照してください。
-* Azure に登録されたアプリケーションのクライアント ID とリダイレクト URI の値。このサンプル アプリケーションには、**Microsoft Graph** の**サインインしているユーザーとしてメールを送信する**アクセス許可を付与する必要があります。[Azure に Web アプリケーションを追加](https://msdn.microsoft.com/office/office365/HowTo/add-common-consent-manually#bk_RegisterWebApp)し、[適切なアクセス許可を付与](https://github.com/OfficeDev/O365-AspNetMVC-Microsoft-Graph-Connect/wiki/Grant-permissions-to-the-Connect-application-in-Azure)します。
+2. **[アプリの追加]** を選択します。
 
-     > 注:アプリ登録プロセス時に、**サインオン URL** として **http://localhost:55065** を必ず指定します。  
+3. アプリの名前を入力して、**[アプリケーションの作成]** を選択します。 
+    
+   登録ページが表示され、アプリのプロパティが一覧表示されます。
 
-## アプリの構成と実行
-1. **UnifiedApiConnect.sln** ファイルを開きます。 
-2. ソリューション エクスプローラーで、**Web.config** ファイルを開きます。 
-3. *ENTER_YOUR_CLIENT_ID* を登録済みの Azure アプリケーションのクライアント ID と置き換えます。
-4. *ENTER_YOUR_SECRET* を登録済みの Azure アプリケーションのキーと置き換えます。
-3. F5 キーを押してビルドとデバッグを実行します。ソリューションを実行し、所属組織のアカウントで Office 365 にサインインします。
+4. アプリケーション ID をコピーします。 これは、アプリの一意識別子です。 
 
-     > 注:サインイン中に次のエラーが発生した場合は、別のブラウザーに開始ページの URL アドレス **http://localhost:55065/home/index** をコピーして貼り付けます。**AADSTS70001:識別子 ad533dcf-ccad-469a-abed-acd1c8cc0d7d を持つアプリケーションがディレクトリに見つかりませんでした**。
+5. **[アプリケーション シークレット]** で、**[新しいパスワードを生成する]** を選択します。 **[新しいパスワードを生成する]** ダイアログからパスワードをコピーします。
+
+   次のセクションで、アプリケーションの ID とパスワードを使用してサンプル アプリを構成します。 
+
+6. **[プラットフォーム]** で、**[プラットフォームの追加]** を選択します。
+
+7. **[Web]** を選択します。
+
+8. **[暗黙的フローを許可する]** のチェック ボックスが選択されていることを確認して、リダイレクト URI として *https://localhost:44300/* を入力します。 
+
+   **[暗黙的フローを許可する]** オプションにより、ハイブリッド フローが有効になります。 認証時に、アクセス トークンを取得するためにアプリが使用できるサインイン情報 (id_token) と成果物 (この場合は、認証コード) の両方をアプリで受信できるようになります。
+
+9. **[保存]** を選択します。
+
+## サンプルの構築と実行
+
+1. ASP.NET 4.6 用 Microsoft Graph Connect のサンプルをダウンロードするか、クローンを作成します。
+
+2. Visual Studio でサンプル ソリューションを開きます。
+
+3. ルート ディレクトリの Web.config ファイルで、**ida:AppId** と **ida:AppSecret** のプレースホルダ―の値をアプリの登録時にコピーしたアプリケーションの ID とパスワードと置き換えます。
+
+4. F5 キーを押して、サンプルを構築して実行します。 これにより、NuGet パッケージの依存関係が復元され、アプリが開きます。
+
+   >パッケージのインストール中にエラーが発生した場合は、ソリューションを保存したローカル パスが長すぎたり深すぎたりしていないかご確認ください。 ドライブのルート近くにソリューションを移動すると問題が解決します。
+
+5. 個人用あるいは職場または学校アカウントでサインインし、要求されたアクセス許可を付与します。
+
+6. **[メール アドレスの取得]** ボタンを選択します。 操作が完了すると、サインインしているユーザーのメール アドレスがページに表示されます。
+
+7. 必要に応じて、受信者一覧とメールの件名を編集し、**[メールの送信]** ボタンを選択します。 メールが送信されると、ボタンの下に成功メッセージが表示されます。
+
+## ノートのコード
+
+- [Startup.Auth.cs](/Microsoft%20Graph%20SDK%20ASPNET%20Connect/Microsoft%20Graph%20SDK%20ASPNET%20Connect/App_Start/Startup.Auth.cs). 現在のユーザーを認証して、サンプルのトークン キャッシュを初期化します。
+
+- [SessionTokenCache.cs](/Microsoft%20Graph%20SDK%20ASPNET%20Connect/Microsoft%20Graph%20SDK%20ASPNET%20Connect/TokenStorage/SessionTokenCache.cs). ユーザーのトークン情報を保存します。 これを独自のカスタム トークン キャッシュと置き換えることができます。 詳細については、「[マルチテナント アプリケーションのアクセス トークンのキャッシュ](https://azure.microsoft.com/en-us/documentation/articles/guidance-multitenant-identity-token-cache/)」を参照してください。
+
+- [SampleAuthProvider.cs](/Microsoft%20Graph%20SDK%20ASPNET%20Connect/Microsoft%20Graph%20SDK%20ASPNET%20Connect/Helpers/SampleAuthProvider.cs). ローカルの IAuthProvider インターフェイスを実装して、MSAL **AcquireTokenSilentAsync** メソッドを使用してアクセス トークンを取得します。 これを独自の認証プロバイダーと置き換えることができます。 
+
+- [SDKHelper.cs](/Microsoft%20Graph%20SDK%20ASPNET%20Connect/Microsoft%20Graph%20SDK%20ASPNET%20Connect/Helpers/SDKHelper.cs). Microsoft Graph との対話に使用される [Microsoft Graph .NET クライアント ライブラリ](https://github.com/microsoftgraph/msgraph-sdk-dotnet)の **GraphServiceClient** を初期化します。
+
+- [HomeController.cs](/Microsoft%20Graph%20SDK%20ASPNET%20Connect/Microsoft%20Graph%20SDK%20ASPNET%20Connect/Controllers/HomeController.cs). 呼び出しを構築して Microsoft Graph サービスに送信し、その応答を処理するために **GraphServiceClient** を使用するメソッドが含まれています。
+   - **GetMyEmailAddress** アクションは、**mail** プロパティまたは **userPrincipalName** プロパティから現在のユーザーのメール アドレスを取得します。
+   - **SendMail** アクションは、現在のユーザーに代わってメールを送信します。
+
+- [Graph.cshtml](/Microsoft%20Graph%20SDK%20ASPNET%20Connect/Microsoft%20Graph%20SDK%20ASPNET%20Connect/Views/Home/Graph.cshtml). サンプルの UI が含まれています。 
 
 ## 質問とコメント
 
-Office 365 365 ASP.NET MVC Connect サンプルについて、Microsoft にフィードバックをお寄せください。質問や提案につきましては、このリポジトリの「[問題](https://github.com/OfficeDev/O365-AspNetMVC-Microsoft-Graph-Connect/issues)」セクションに送信できます。
+このサンプルに関するフィードバックをお寄せください。 質問や提案につきましては、このリポジトリの「[問題](https://github.com/microsoftgraph/aspnet-connect-sample/issues)」セクションで送信できます。
 
-Office 365 開発全般の質問につきましては、「[スタック オーバーフロー](http://stackoverflow.com/questions/tagged/Office365+API)」に投稿してください。質問またはコメントには、必ず [Office365] および [MicrosoftGraph] のタグを付けてください。
-  
-## その他の技術情報
+お客様からのフィードバックを重視しています。 [スタック オーバーフロー](http://stackoverflow.com/questions/tagged/microsoftgraph)でご連絡いただけます。 ご質問には [MicrosoftGraph] のタグを付けてください。
 
-* [Microsoft Graph ドキュメント](http://graph.microsoft.io)
-* [Microsoft Graph API リファレンス](http://graph.microsoft.io/docs/api-reference/v1.0)
+## 投稿 ##
 
+このサンプルに投稿する場合は、[CONTRIBUTING.md](CONTRIBUTING.md) を参照してください。
+
+このプロジェクトでは、[Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/) が採用されています。詳細については、「[規範に関する FAQ](https://opensource.microsoft.com/codeofconduct/faq/)」を参照してください。または、その他の質問やコメントがあれば、[opencode@microsoft.com](mailto:opencode@microsoft.com) までにお問い合わせください。
+
+## その他のリソース
+
+- [その他の Microsoft Graph Connect サンプル](https://github.com/MicrosoftGraph?utf8=%E2%9C%93&query=-Connect)
+- [Microsoft Graph の概要](http://graph.microsoft.io)
+- [Office 開発者向けコード サンプル](http://dev.office.com/code-samples)
+- [Office デベロッパー センター](http://dev.office.com/)
 
 ## 著作権
-Copyright (c) 2015 Microsoft.All rights reserved.
+Copyright (c) 2016 Microsoft. All rights reserved.
 
 
