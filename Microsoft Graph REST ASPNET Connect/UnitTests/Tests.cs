@@ -9,7 +9,10 @@ using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
+
 using Microsoft_Graph_REST_ASPNET_Connect.Models;
+using System.Net;
 
 namespace UnitTests
 {
@@ -70,15 +73,17 @@ namespace UnitTests
 
             // Assert
             Assert.IsTrue(emailAddress.ToLower() == userName.ToLower(), emailAddress.ToString());
+
         }
 
         [TestMethod]
         // Test GraphService.SendEmail method. 
         // Sends an email to the test account from the test account.
-        // Success: Response reason is expected.
+        // Success: Retrieved message body matches sent message body.
         public async Task SendEmail()
         {
             // Arrange
+            string testBody = Guid.NewGuid().ToString();
             GraphService graphService = new GraphService();
             List<Recipient> recipientList = new List<Recipient>();
             recipientList.Add(new Recipient
@@ -92,7 +97,7 @@ namespace UnitTests
             {
                 Body = new ItemBody
                 {
-                    Content = "<html><body>The body of the test email.</body></html>",
+                    Content = "<html><body>" + testBody + "</body></html>",
                     ContentType = "HTML"
                 },
                 Subject = "Test email from ASP.NET 4.6 Connect sample",
@@ -104,11 +109,65 @@ namespace UnitTests
                 SaveToSentItems = true
             };
 
-            // Act
-            string response = await graphService.SendEmail(accessToken, email);
+            try
+            {
+                // Act
+                string response = await graphService.SendEmail(accessToken, email);
+            }
 
-            // Assert
-            Assert.IsTrue(response == "Success! Your mail was sent.");
+            // Test action will throw an exception when it tries to return resource string.
+            // So catch the exception when the operation is complete, and then retrieve the email.
+            catch (Exception e)
+            {
+                if (e.HResult == -2147024894)
+                {
+                    var mailBody = await GetLastEmail(accessToken);
+
+                    // Assert
+                    Assert.IsTrue(mailBody == testBody, mailBody);
+                    return;
+                }
+                else
+                {
+                    Assert.Fail(e.InnerException.ToString());
+                }
+            }
+            Assert.Fail();
+        }
+
+        private async Task<string> GetLastEmail(string accessToken)
+        {
+            // Give the service time to update.
+            System.Threading.Thread.Sleep(10000);
+            string endpoint = "https://graph.microsoft.com/v1.0/me/mailFolders('Inbox')/messages";
+            string queryParameter = "?$top(1)";
+
+            using (var client = new HttpClient())
+            {
+                using (var request = new HttpRequestMessage(HttpMethod.Get, endpoint + queryParameter))
+                {
+                    request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
+                    // This header has been added to identify our sample in the Microsoft Graph service. If extracting this code for your project please remove.
+                    request.Headers.Add("SampleID", "aspnet-connect-rest-sample");
+                    using (HttpResponseMessage response = await client.SendAsync(request))
+                    {
+                        if (response.StatusCode == HttpStatusCode.OK)
+                        {
+                            var json = JObject.Parse(await response.Content.ReadAsStringAsync());
+                            var messages = json.GetValue("value").ToString();
+                            var messagesJson = JArray.Parse(messages);
+                            var email = JObject.Parse(messagesJson[0].ToString());
+                            return email.GetValue("bodyPreview").ToString();
+                        }
+                        else
+                        {
+                            return response.ReasonPhrase;
+                        }
+                    }
+                }
+            }
         }
     }
 }
