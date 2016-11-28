@@ -25,7 +25,7 @@ In addition, the sample uses the [Microsoft Authentication Library (MSAL)](https
 This sample requires the following:  
 
   * [Visual Studio 2015](https://www.visualstudio.com/en-us/downloads) 
-  * Either a [Microsoft account](https://www.outlook.com) or [work or school account](http://dev.office.com/devprogram)
+  * Either a [Microsoft account](https://www.outlook.com) or [work or school account](https://dev.office.com/devprogram)
 
 ## Register the application
 
@@ -97,7 +97,7 @@ If you have an Azure subscription, you can deploy the sample app to Azure. These
 
 2. In the Publish dialog, choose **Import**, and choose the publish profile file you just downloaded. 
 
-3. On the Connection tab, change the *http* protocol to *https* in the Destination URL of your new web app.
+3. On the Connection tab of the Publish dialog, change the *http* protocol to *https* in the Destination URL of your new web app.
 
 4. Copy the Destination URL, and and then click **Publish**. Close the browser window that opens.
 
@@ -105,7 +105,7 @@ If you have an Azure subscription, you can deploy the sample app to Azure. These
 
 6. Choose **View > Other Windows > Web Publish Activity**. 
 
-7. In the Web Publish Activity window, click the **Publish Web** button (looks like a globe) on the toolbar. This is how you'll update the published project after you make changes.
+7. In the Web Publish Activity window, click the **Publish Web** button (looks like a globe) on the toolbar. This is how you can update the published project after you make changes.
 
 **Application Registration Portal**
 
@@ -135,7 +135,7 @@ The new Azure web app should now be ready to use.
 
 We'd love to get your feedback about this sample. You can send us your questions and suggestions in the [Issues](https://github.com/microsoftgraph/aspnet-connect-rest-sample/issues) section of this repository.
 
-Your feedback is important to us. Connect with us on [Stack Overflow](http://stackoverflow.com/questions/tagged/microsoftgraph). Tag your questions with [MicrosoftGraph].
+Your feedback is important to us. Connect with us on [Stack Overflow](https://stackoverflow.com/questions/tagged/microsoftgraph). Tag your questions with [MicrosoftGraph].
 
 ## Contributing ##
 
@@ -146,9 +146,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 ## Additional resources
 
 - [Other Microsoft Graph Connect samples](https://github.com/MicrosoftGraph?utf8=%E2%9C%93&query=-Connect)
-- [Microsoft Graph overview](http://graph.microsoft.io)
-- [Office developer code samples](http://dev.office.com/code-samples)
-- [Office dev center](http://dev.office.com/)
+- [Microsoft Graph overview](https://graph.microsoft.io)
 
 ## Copyright
 Copyright (c) 2016 Microsoft. All rights reserved.
