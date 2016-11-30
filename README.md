@@ -29,7 +29,7 @@ This sample requires the following:
 
 ## Register the application
 
-1. Sign into the [App Registration Portal](https://apps.dev.microsoft.com/) using either your personal or work or school account.
+1. Sign into the [Application Registration Portal](https://apps.dev.microsoft.com/) using either your personal or work or school account.
 
 2. Choose **Add an app**.
 
@@ -73,11 +73,11 @@ This sample requires the following:
 
 8. Next steps: Check out the [Microsoft Graph Snippets Sample for ASP.NET 4.6](https://github.com/microsoftgraph/aspnet-snippets-sample) to see examples of common Microsoft Graph operations.
 
-##Deploy the sample to Azure
+## Deploy the sample to Azure
 
-If you have an Azure subscription, you can deploy the sample app to Azure. These instructions assume you've already [registered the sample app](#register-the-application) in the Azure Registration Portal.
+If you have an Azure subscription, you can publish the sample app to an Azure website. These instructions assume you've already [registered the sample app](#register-the-application) in the Application Registration Portal.
 
-**Azure Portal**
+### Create a web app (website) in the Azure Portal
 
 1. Sign into the [Azure Portal](https://portal.azure.com) with your Azure credentials.
 
@@ -91,7 +91,7 @@ If you have an Azure subscription, you can deploy the sample app to Azure. These
 
 6. Save the profile locally.
 
-**Visual Studio**
+### Publish the sample app from Visual Studio
 
 1. In Visual Studio, open the sample app. Right-click the **Microsoft Graph REST ASPNET Connect** project node and choose **Publish**.
 
@@ -107,7 +107,7 @@ If you have an Azure subscription, you can deploy the sample app to Azure. These
 
 7. In the Web Publish Activity window, click the **Publish Web** button (looks like a globe) on the toolbar. This is how you can update the published project after you make changes.
 
-**Application Registration Portal**
+### Update the redirect URI in the Application Registration Portal
 
 1. In the [Application Registration Portal](https://apps.dev.microsoft.com), open the application that you registered for the sample (as described in [Register the application](#register-the-application)). 
 
