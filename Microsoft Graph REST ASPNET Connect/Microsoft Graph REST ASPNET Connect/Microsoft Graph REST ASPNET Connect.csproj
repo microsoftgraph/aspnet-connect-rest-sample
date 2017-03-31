@@ -181,6 +181,7 @@
     <Compile Include="TokenStorage\SessionTokenCache.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\test.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

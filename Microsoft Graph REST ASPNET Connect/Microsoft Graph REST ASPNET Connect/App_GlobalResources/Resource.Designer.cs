@@ -166,9 +166,9 @@ namespace Resources {
         ///&lt;/head&gt;
         ///&lt;body style=&apos;font-family:calibri&apos;&gt;
         ///&lt;h2&gt;Congratulations!&lt;/h2&gt;
-        ///&lt;p&gt;This is a message from the Microsoft Graph Connect Sample. You are well on your way to incorporating Microsoft Graph endpoints in your apps.&lt;/p&gt;
+        ///&lt;p&gt;This is a message from the Microsoft Graph Connect Sample. You are well on your way to incorporating Microsoft Graph endpoints in your apps.&lt;/p&gt;&lt;a href=&apos;{0}&apos;&gt;See the photo you just uploaded!&lt;/a&gt;
         ///&lt;h3&gt;What&apos;s next?&lt;/h3&gt;&lt;ul&gt;
-        ///&lt;li&gt;Check out &lt;a href=&apos;https://graph.microsoft.io&apos;&gt;graph.microsoft.io&lt;/a&gt; to start building Microsoft Graph apps today with all the latest tools, templates, and  [rest of string was truncated]&quot;;.
+        ///&lt;li&gt;Check out &lt;a href=&apos;https://developer.microsoft.com/graph&apos;&gt;developer.microsoft.com/graph&lt;/a&gt; to start buildi [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Graph_SendMail_Body_Content {
             get {
