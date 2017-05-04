@@ -9,6 +9,7 @@ using Microsoft_Graph_REST_ASPNET_Connect.Helpers;
 using Microsoft_Graph_REST_ASPNET_Connect.Models;
 using Resources;
 using System;
+using System.IO;
 
 namespace Microsoft_Graph_REST_ASPNET_Connect.Controllers
 {
@@ -52,13 +53,16 @@ namespace Microsoft_Graph_REST_ASPNET_Connect.Controllers
                 return View("Graph");
             }
 
-            // Build the email message.
-            MessageRequest email = graphService.BuildEmailMessage(Request.Form["recipients"], Request.Form["subject"]);
             try
             {
 
                 // Get an access token.
                 string accessToken = await SampleAuthProvider.Instance.GetUserAccessTokenAsync();
+                
+                // Build the email message. 
+                // The message contains a file attachment and embeds a sharing link to the file in the message body.
+                MessageRequest email = await graphService.BuildEmailMessage(accessToken, 
+                    Request.Form["recipients"], Request.Form["subject"]);
 
                 // Send the email.
                 ViewBag.Message = await graphService.SendEmail(accessToken, email);
