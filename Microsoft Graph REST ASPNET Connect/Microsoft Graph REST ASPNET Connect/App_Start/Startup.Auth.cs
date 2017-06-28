@@ -28,7 +28,7 @@ namespace Microsoft_Graph_REST_ASPNET_Connect
         private static string appSecret = ConfigurationManager.AppSettings["ida:AppSecret"];
         private static string redirectUri = ConfigurationManager.AppSettings["ida:RedirectUri"];
         private static string graphScopes = ConfigurationManager.AppSettings["ida:GraphScopes"];
-        
+
         public void ConfigureAuth(IAppBuilder app)
         {
             app.SetDefaultSignInAsAuthenticationType(CookieAuthenticationDefaults.AuthenticationType);
@@ -65,14 +65,18 @@ namespace Microsoft_Graph_REST_ASPNET_Connect
                         {
                             var code = context.Code;
                             string signedInUserID = context.AuthenticationTicket.Identity.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+                            TokenCache userTokenCache = new SessionTokenCache(signedInUserID,
+                                context.OwinContext.Environment["System.Web.HttpContextBase"] as HttpContextBase).GetMsalCacheInstance();
                             ConfidentialClientApplication cca = new ConfidentialClientApplication(
-                                appId, 
+                                appId,
                                 redirectUri,
                                 new ClientCredential(appSecret),
-                                new SessionTokenCache(signedInUserID, context.OwinContext.Environment["System.Web.HttpContextBase"] as HttpContextBase));
+                                userTokenCache,
+                                null);
                             string[] scopes = graphScopes.Split(new char[] { ' ' });
 
-                            AuthenticationResult result = await cca.AcquireTokenByAuthorizationCodeAsync(scopes, code);
+                            AuthenticationResult result = await cca.AcquireTokenByAuthorizationCodeAsync(code, scopes);
                         },
                         AuthenticationFailed = (context) =>
                         {

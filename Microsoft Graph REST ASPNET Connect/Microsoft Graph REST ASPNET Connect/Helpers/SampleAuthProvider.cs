@@ -7,12 +7,14 @@ using Microsoft.Identity.Client;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OpenIdConnect;
 using Microsoft_Graph_REST_ASPNET_Connect.TokenStorage;
-using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using Resources;
+using System;
 
 namespace Microsoft_Graph_REST_ASPNET_Connect.Helpers
 {
@@ -27,7 +29,7 @@ namespace Microsoft_Graph_REST_ASPNET_Connect.Helpers
         private SessionTokenCache tokenCache { get; set; }
 
         private static readonly SampleAuthProvider instance = new SampleAuthProvider();
-        private SampleAuthProvider() { } 
+        private SampleAuthProvider() { }
 
         public static SampleAuthProvider Instance
         {
@@ -37,29 +39,29 @@ namespace Microsoft_Graph_REST_ASPNET_Connect.Helpers
             }
         }
 
-        // Get an access token. First tries to get the token from the token cache.
+        // Gets an access token. First tries to get the token from the token cache.
         public async Task<string> GetUserAccessTokenAsync()
         {
             string signedInUserID = ClaimsPrincipal.Current.FindFirst(ClaimTypes.NameIdentifier).Value;
-            tokenCache = new SessionTokenCache(
-                signedInUserID,
-                HttpContext.Current.GetOwinContext().Environment["System.Web.HttpContextBase"] as HttpContextBase);
+            HttpContextWrapper httpContext = new HttpContextWrapper(HttpContext.Current);
+            TokenCache userTokenCache = new SessionTokenCache(signedInUserID, httpContext).GetMsalCacheInstance();
             //var cachedItems = tokenCache.ReadItems(appId); // see what's in the cache
 
             ConfidentialClientApplication cca = new ConfidentialClientApplication(
                 appId,
                 redirectUri,
                 new ClientCredential(appSecret),
-                tokenCache);
+                userTokenCache,
+                null);
 
             try
             {
-                AuthenticationResult result = await cca.AcquireTokenSilentAsync(scopes.Split(new char[] { ' ' }));
-                return result.Token;
+                AuthenticationResult result = await cca.AcquireTokenSilentAsync(scopes.Split(new char[] { ' ' }), cca.Users.First());
+                return result.AccessToken;
             }
 
             // Unable to retrieve the access token silently.
-            catch (MsalSilentTokenAcquisitionException)
+            catch (Exception)
             {
                 HttpContext.Current.Request.GetOwinContext().Authentication.Challenge(
                     new AuthenticationProperties() { RedirectUri = "/" },
