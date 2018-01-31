@@ -1,0 +1,21 @@
+### YamlMime:Sample
+sample:
+- name: Microsoft Graph Connect Sample for ASP.NET 4.6 (REST)
+  path: ''
+  description: This ASP.NET MVC sample shows how to connect to Microsoft Graph and use the API to send an email.
+  readme: ''
+  generateZip: FALSE
+  isLive: TRUE
+  technologies:
+  - Microsoft Graph
+  - Azure AD
+  azureDeploy: ''
+  author: jamescro
+  platforms: []
+  languages:
+  - C#
+  extensions:
+    products:
+    - OneDrive
+    - Office 365
+    scenarios: []
